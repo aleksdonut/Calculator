@@ -69,7 +69,7 @@ public class MainController {
         changeValue();
     }
 
-    public void changeValue() {
+    private void changeValue() {
         valueButton.setOnAction(actionEvent -> {
             if (!(mainTextArea.getText().isEmpty())) {
                 if (mainTextArea.getText().startsWith("-")) {
@@ -81,10 +81,10 @@ public class MainController {
         });
     }
 
-    public void clearDesk() {
+    private void clearDesk() {
         clearButton.setOnAction(actionEvent -> mainTextArea.clear());
     }
-    public void pressedKey() {
+    private void pressedKey() {
         zeroButton.setOnAction(actionEvent -> mainTextArea.setText(mainTextArea.getText() + zeroButton.getText()));
         oneButton.setOnAction(actionEvent -> mainTextArea.setText(mainTextArea.getText() + oneButton.getText()));
         twoButton.setOnAction(actionEvent -> mainTextArea.setText(mainTextArea.getText() + twoButton.getText()));
@@ -97,7 +97,7 @@ public class MainController {
         nineButton.setOnAction(actionEvent -> mainTextArea.setText(mainTextArea.getText() + nineButton.getText()));
     }
 
-    public void keyboardInput() {
+    private void keyboardInput() {
        vBox.addEventFilter(KeyEvent.KEY_TYPED, keyEvent -> {
            if (keyEvent.getCharacter().matches("\\d*")) {
                mainTextArea.setText(mainTextArea.getText() + keyEvent.getCharacter());
