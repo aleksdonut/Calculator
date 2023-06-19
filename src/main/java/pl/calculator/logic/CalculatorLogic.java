@@ -1,7 +1,7 @@
 package pl.calculator.logic;
 
 public class CalculatorLogic {
-    private int add(int x, int y) {
+    public int add(int x, int y) {
         return x + y;
     }
 

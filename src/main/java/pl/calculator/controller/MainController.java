@@ -7,8 +7,17 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
+import pl.calculator.logic.CalculatorLogic;
 
 public class MainController {
+    private static final int ADD = 1;
+    private static final int SUB = 2;
+    private static final int MUL = 3;
+    private static final int DIV = 4;
+
+    CalculatorLogic calculatorLogic = new CalculatorLogic();
+    private int operator = 0;
+
 
     @FXML
     private VBox vBox;
@@ -67,6 +76,32 @@ public class MainController {
         keyboardInput();
         clearDesk();
         changeValue();
+        add();
+    }
+
+    private void result(int x) {
+        sumButton.setOnAction(actionEvent -> {
+            if (!(mainTextArea.getText().isEmpty())) {
+                int y = Integer.parseInt(mainTextArea.getText());
+                switch(operator) {
+                    case ADD:
+                        mainTextArea.setText(Integer.toString(calculatorLogic.add(x, y)));
+                        break;
+
+                }
+            }
+        });
+    }
+
+    private void add() {
+        addingButton.setOnAction(actionEvent -> {
+            if(!(mainTextArea.getText().isEmpty())) {
+                int x = Integer.parseInt(mainTextArea.getText());
+                mainTextArea.clear();
+                operator = ADD;
+                result(x);
+            }
+        });
     }
 
     private void changeValue() {
