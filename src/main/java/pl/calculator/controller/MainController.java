@@ -14,6 +14,9 @@ public class MainController {
     private static final int SUB = 2;
     private static final int MUL = 3;
     private static final int DIV = 4;
+    private static final int SQRT = 5;
+    private static final int PER = 6;
+
 
     CalculatorLogic calculatorLogic = new CalculatorLogic();
     private int operator = 0;
@@ -77,30 +80,83 @@ public class MainController {
         clearDesk();
         changeValue();
         add();
+        subtract();
+        multiply();
+        divide();
+        sqrt();
+    }
+
+    private int loadFirstValue() {
+        if (!(mainTextArea.getText().isEmpty())) {
+            int x = Integer.parseInt(mainTextArea.getText());
+            mainTextArea.clear();
+            return x;
+        }
+        return 0;
     }
 
     private void result(int x) {
         sumButton.setOnAction(actionEvent -> {
             if (!(mainTextArea.getText().isEmpty())) {
                 int y = Integer.parseInt(mainTextArea.getText());
-                switch(operator) {
+                switch (operator) {
                     case ADD:
                         mainTextArea.setText(Integer.toString(calculatorLogic.add(x, y)));
                         break;
-
+                    case SUB:
+                        mainTextArea.setText(Integer.toString(calculatorLogic.subtract(x, y)));
+                        break;
+                    case MUL:
+                        mainTextArea.setText(Integer.toString(calculatorLogic.multiply(x, y)));
+                        break;
+                    case DIV:
+                        mainTextArea.setText(Integer.toString(calculatorLogic.divide(x, y)));
+                        break;
+                    case SQRT:
+                        mainTextArea.setText(Double.toString(calculatorLogic.sqrt(x)));
+                    default:
+                        break;
                 }
             }
         });
     }
 
+    private void sqrt() {
+        sqrtButton.setOnAction(actionEvent -> {
+            int x = loadFirstValue();
+            mainTextArea.setText(Double.toString(calculatorLogic.sqrt(x)));
+        });
+    }
+
+    private void divide() {
+        divideButton.setOnAction(actionEvent -> {
+            int x = loadFirstValue();
+            operator = DIV;
+            result(x);
+        });
+    }
+
+    private void multiply() {
+        multiplicationButton.setOnAction(actionEvent -> {
+            int x = loadFirstValue();
+            operator = MUL;
+            result(x);
+        });
+    }
+
     private void add() {
         addingButton.setOnAction(actionEvent -> {
-            if(!(mainTextArea.getText().isEmpty())) {
-                int x = Integer.parseInt(mainTextArea.getText());
-                mainTextArea.clear();
-                operator = ADD;
-                result(x);
-            }
+            int x = loadFirstValue();
+            operator = ADD;
+            result(x);
+        });
+    }
+
+    private void subtract() {
+        subtractionButton.setOnAction(actionEvent -> {
+            int x = loadFirstValue();
+            operator = SUB;
+            result(x);
         });
     }
 
@@ -119,6 +175,7 @@ public class MainController {
     private void clearDesk() {
         clearButton.setOnAction(actionEvent -> mainTextArea.clear());
     }
+
     private void pressedKey() {
         zeroButton.setOnAction(actionEvent -> mainTextArea.setText(mainTextArea.getText() + zeroButton.getText()));
         oneButton.setOnAction(actionEvent -> mainTextArea.setText(mainTextArea.getText() + oneButton.getText()));
@@ -133,10 +190,10 @@ public class MainController {
     }
 
     private void keyboardInput() {
-       vBox.addEventFilter(KeyEvent.KEY_TYPED, keyEvent -> {
-           if (keyEvent.getCharacter().matches("\\d*")) {
-               mainTextArea.setText(mainTextArea.getText() + keyEvent.getCharacter());
-           }
-       });
+        vBox.addEventFilter(KeyEvent.KEY_TYPED, keyEvent -> {
+            if (keyEvent.getCharacter().matches("\\d*")) {
+                mainTextArea.setText(mainTextArea.getText() + keyEvent.getCharacter());
+            }
+        });
     }
 }
